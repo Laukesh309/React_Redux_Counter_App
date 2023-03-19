@@ -1,0 +1,66 @@
+Overview
+===========
+there are four major pprtion in redux which is used in react
+1.Action
+2.Reducer
+3.Store
+
+1.package required for redux configure in react are :
+    1. redux
+    2. react-redux
+    3. @reduxjs/toolkit (because previous we are using createStore which is import from react-redux but now it is deprecated so Instead of createStore we will use configureStore which is imported from @reduxjs/toolkit)
+
+
+    Issue We Have Faced While Creating This App
+    ==============================================
+1. In configureStore reducer key is mondatory which value is assign allReducer(check in index.js Store Folder)
+2. state should be immutable in every changes so every time new state value should return . you we are using array as state then return array with spread operator
+if you are using array of object the do deep copy of every field even inside of object also . so for deep copy use string.parse(string.stringify()) method
+
+Redux Component Overview
+===========================
+
+1.Action : It is besically a function which return  an object which define what we have to perform. in return object type property is mondatory other than this we can use
+other property according to our need
+
+2. Reducer : It is also a function in which two parameter is mondatory (state and action) we have to define initial state in defoult value of state parameter
+   and we have to change state according to the action.type . for this we use switch case which is same as action function return
+  Note: State must be immutable
+
+in both Action and Reducer no need to add any package from redux . it is just like normal function
+
+3. Store : it is not any user define funtion or object . it is a general some calling funtion which is imported from redux like
+   if reducer is more than one then we use combineReducer ({
+
+   })
+   syntax like  :
+    let allReducer=combineReducer({
+      counter:couterReducer
+    })
+  then send this
+  const store = configureStore({
+    reducer:allReducer /// here reducer key is mondatory . eror will throw if we not define key
+  })
+
+now by above line of code store is ready
+
+4.  provider : it is imported from react-redux package . it will  we wrapped at the top level of componet and sent store as props from provier componet
+   Now Store will available to every place in child componet
+
+
+Now To GetState of Store
+===========================
+1. import {useSelector,useDispatch} from  "react-redux"
+
+  to get perticular reducer state value use syntax like this:
+   const state = useSelector(state=>state.counter)
+2.  to dispatch any action use useDispatch hook in which pass action function defined in action filenames
+    const dispatch = useDispatch()
+
+    <button  onClick=()=>{
+      dispatch(increment())
+    }/>
+
+Note
+======
+we can create multiple reducer funtion according to our need
